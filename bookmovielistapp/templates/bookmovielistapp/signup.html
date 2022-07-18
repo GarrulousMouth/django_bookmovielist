@@ -1,0 +1,13 @@
+{% extends 'bookmovielistapp/base.html' %}
+
+{% block content %}
+    <h1>Регистрация</h1>
+    {% if not form.is_valid %}
+        {{ error }}
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+    {% endif %}
+{% endblock %}

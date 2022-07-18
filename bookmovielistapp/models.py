@@ -1,8 +1,27 @@
+from tabnanny import verbose
 from django.db import models
 
 # Create your models here.
+class Chapter(models.Model):
+    name = models.CharField(max_length=250, unique=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Chapter'
+        verbose_name_plural = 'Chapters'
+
 class BookMovieList(models.Model):
     name = models.CharField(max_length=250, unique=True, blank=True)
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'BookMovieList'
+        verbose_name_plural = 'BookMovieLists'
 
 class ListItem(models.Model):
     name = models.CharField(max_length=250, blank=True)
@@ -12,3 +31,10 @@ class ListItem(models.Model):
     day_complete = models.DateField()
     likes = models.BooleanField(default=False)
     bookmovieid = models.ForeignKey(BookMovieList, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'ListItem'
+        verbose_name_plural = 'ListItems'

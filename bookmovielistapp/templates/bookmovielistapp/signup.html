@@ -2,12 +2,18 @@
 
 {% block content %}
     <h1>Регистрация</h1>
-    {% if not form.is_valid %}
-        {{ error }}
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Зарегистрироваться</button>
-        </form>
+    {% if not user.is_authenticated %}
+
+
+        {% if not form.is_valid %}
+            {{ error }}
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Зарегистрироваться</button>
+            </form>
+        {% endif %}
+    {% else %}
+        <h2>Уходи, ты уже зарегистрирован</h2>
     {% endif %}
 {% endblock %}

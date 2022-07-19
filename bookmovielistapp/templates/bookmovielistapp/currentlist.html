@@ -1,0 +1,25 @@
+{% extends 'bookmovielistapp/base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+{{ error }}
+{% for list in lists %}
+    {% if list.name %}{{ list.name }}{% endif %}
+    {% for elem in elems%}
+    {% if elem.name %}
+        {{ elem.name }}
+    {% endif %}
+    {% endfor %}
+{% endfor %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form1.as_p }}
+<button name="create_lists" type="submit">Создать раздел</button>
+</form>
+<form method="POST">
+    {% csrf_token %}
+    {{ form2.as_p }}
+<button name="create_elem" type="submit">Создать раздел</button>
+</form>
+{% endif %}
+{% endblock %}

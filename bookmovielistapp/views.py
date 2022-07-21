@@ -67,28 +67,27 @@ def currentlist(request):
     # Фильтрация элементов таблицы, принадлежащих пользователю
     create_lists = BookMovieList.objects.filter(user=request.user)
     create_elem = ListItem.objects.filter(user=request.user)
-    # chapters = Chapter.objects.select_related().all()
-    # if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-    #     result = request.GET.get('send_data')
-    #     bookmovieid = ListItem.objects.filter(chapter=result)
-    #     return JsonResponse(serializers.serialize("json", bookmovieid), safe=False)
+    chapters = Chapter.objects.select_related().all()
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        result = request.GET.get('send_data')
+        bookmovieid = BookMovieList.objects.filter(chapter=result, user=request.user)
+        return JsonResponse(serializers.serialize("json", bookmovieid), safe=False)
     # Добавление нового раздела
-    if request.method == 'POST' and 'create_lists' in request.POST:
-        form = BookMovieListForm(request.POST)
+    if request.method == 'POST' and 'create_list' in request.POST:
+        form = BookMovieListForm(request.POST, prefix='lists')
         newlist = form.save(commit=False)
         newlist.user = request.user
         newlist.save()
         return redirect('current')
     # Добавление элемента в раздел
-    if (request.method == 'POST' and 'create_elem' in request.POST):
-        # Обработка ошибки на неправильную форму
+    if request.method == 'POST' and 'create_elem' in request.POST:
         try:
-            form = ListItemForm(request.POST)
+            form = ListItemForm(request.user, request.POST, prefix='elems')
             newelem = form.save(commit=False)
             newelem.user = request.user
             newelem.save()
             return redirect('current')
         except ValueError:
-            return render(request, 'bookmovielistapp/currentlist.html', {'form1': BookMovieListForm(prefix='lists'), 'form2': ListItemForm(prefix='elems'), 'lists': create_lists, 'elems': create_elem, 'error':'Не правильные данные'})
+            return render(request, 'bookmovielistapp/currentlist.html', {'form1': BookMovieListForm(prefix='lists'), 'form2': ListItemForm(request.user, prefix='elems'), 'lists': create_lists, 'chapters': chapters, 'elems': create_elem, 'error':'Не правильные данные'})
     # GET-запрос с передачей списков и элементов пользователя
-    return render(request, 'bookmovielistapp/currentlist.html', {'form1': BookMovieListForm(prefix='lists'), 'form2': ListItemForm(prefix='elems'), 'lists': create_lists, 'elems': create_elem, })
+    return render(request, 'bookmovielistapp/currentlist.html', {'form1': BookMovieListForm(prefix='lists'), 'form2': ListItemForm(request.user, prefix='elems'), 'lists': create_lists, 'chapters': chapters, 'elems': create_elem})

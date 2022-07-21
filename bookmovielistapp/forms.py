@@ -31,8 +31,12 @@ class BookMovieListForm(forms.ModelForm):
     
 
 class ListItemForm(forms.ModelForm):
-    year_of_issue = forms.DateField(label='Год выпуска', input_formats=['%Y'])
-    day_complete = forms.DateField(label='День прочтения/просмотра', widget=forms.DateInput(attrs={'type': 'date'}))
+    year_of_issue = forms.DateField(label='Год выпуска', input_formats=['%Y'], widget=forms.TextInput(attrs={'maxlength': '4'}), required=False)
+    day_complete = forms.DateField(label='День прочтения/просмотра', widget=forms.DateInput(attrs={'type': 'date'}), required=False)
     class Meta:
         model = ListItem
         fields = ('name', 'author', 'description', 'year_of_issue', 'day_complete', 'likes', 'chapter', 'bookmovieid')
+
+    def __init__(self, user, *args, **kwargs):
+        super(ListItemForm, self).__init__(*args, **kwargs)
+        self.fields['bookmovieid'].queryset =  BookMovieList.objects.filter(user=user)

@@ -6,23 +6,54 @@
 {% if user.is_authenticated %}
 {{ error }}
 {% for chapter in chapters %}
-    {{ chapter.name }}
-    {% for list in lists %}
-        {% if list.name and list.chapter == chapter %}{{ list.name }}{% endif %}
-            {% for elem in elems %}
-                {% if elem.name and elem.bookmovieid == list and elem.chapter == chapter %}
-                    {{ elem.name }}
-                {% endif %}
-            {% endfor %}
+{{ chapter.name }}
 
+
+    {% for list in lists %}
+        <table>
+                {% if list.name and list.chapter == chapter %}
+                <caption>
+                    {{ list.name }}
+                </caption>
+                <thead>
+                    <th>Название</th>
+                    <th>Автор/Режиссёр</th>
+                </thead>
+                {% endif %}
+                <tbody>
+                    {% for elem in elems %}
+                    <tr>
+                        {% if elem.bookmovieid == list and elem.chapter == chapter %}
+                        <td>
+                            {% if elem.name %}
+                                    {{ elem.name }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if elem.author %}
+                                    {{ elem.author }}
+                            {% endif %}
+                        </td>
+                        {% endif %}
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+
+
+        </table>
+ 
     {% endfor %}
 
+
 {% endfor %}
+
 <form method="POST">
     {% csrf_token %}
     {{ form1.as_p }}
-<button name="create_lists" type="submit">Создать раздел</button>
+<button name="create_list" type="submit">Создать раздел</button>
 </form>
+
 <form method="POST" id="create_elems">
     {% csrf_token %}
     {{ form2.as_p }}

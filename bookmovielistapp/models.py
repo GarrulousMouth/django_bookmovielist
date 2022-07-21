@@ -13,7 +13,7 @@ class Chapter(models.Model):
         verbose_name_plural = 'Chapters'
 
 class BookMovieList(models.Model):
-    name = models.CharField(max_length=250, unique=True, blank=True)
+    name = models.CharField(max_length=250)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
     def __str__(self):
@@ -24,11 +24,11 @@ class BookMovieList(models.Model):
         verbose_name_plural = 'BookMovieLists'
 
 class ListItem(models.Model):
-    name = models.CharField(max_length=250, blank=True)
-    author = models.CharField(max_length=250)
-    description = models.TextField()
-    year_of_issue = models.DateField()
-    day_complete = models.DateField()
+    name = models.CharField(max_length=250)
+    author = models.CharField(max_length=250, blank=True)
+    description = models.TextField(blank=True)
+    year_of_issue = models.DateField(max_length=4, null=True, blank=True)
+    day_complete = models.DateField(null=True, blank=True)
     likes = models.BooleanField(default=False)
     bookmovieid = models.ForeignKey(BookMovieList, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

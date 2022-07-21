@@ -19,9 +19,15 @@ from bookmovielistapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Домашняя страница
     path('', views.home, name='home'),
+    # Регистрация
     path('signup', views.signup, name='signup'),
+    # Вход
     path('login', views.loginuser, name='loginuser'),
+    # Выход
     path('logout', views.logoutuser, name='logoutuser'),
+    # Страница личного списка
     path('current', views.currentlist, name='current'),
+
 ]

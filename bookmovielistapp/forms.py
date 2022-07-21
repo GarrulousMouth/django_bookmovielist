@@ -16,7 +16,7 @@ class SignUpForm(UserCreationForm):
         fields = ('username', 'email', 'password1', 'password2',)
 
 
-class LoginForm(AuthenticationForm):
+class LoginForm(forms.Form):
     username = forms.CharField(label='Логин', max_length=100, required=True)
     password = forms.CharField(label='Пароль', max_length=100, required=True, widget=forms.PasswordInput())
 
@@ -28,10 +28,11 @@ class BookMovieListForm(forms.ModelForm):
     class Meta:
         model = BookMovieList
         fields = ('name', 'chapter')
+    
 
 class ListItemForm(forms.ModelForm):
     year_of_issue = forms.DateField(label='Год выпуска', input_formats=['%Y'])
-    day_complete = forms.DateField(label='День прочтения/просмотра', input_formats=['%d/%m/%Y'])
+    day_complete = forms.DateField(label='День прочтения/просмотра', widget=forms.DateInput(attrs={'type': 'date'}))
     class Meta:
         model = ListItem
         fields = ('name', 'author', 'description', 'year_of_issue', 'day_complete', 'likes', 'chapter', 'bookmovieid')

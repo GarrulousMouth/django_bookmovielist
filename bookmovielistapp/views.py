@@ -67,7 +67,7 @@ def currentlist(request):
     # Фильтрация элементов таблицы, принадлежащих пользователю
     create_lists = BookMovieList.objects.filter(user=request.user)
     create_elem = ListItem.objects.filter(user=request.user)
-    chapters = Chapter.objects.select_related().all()
+    # chapters = Chapter.objects.select_related().all()
     # if request.headers.get('x-requested-with') == 'XMLHttpRequest':
     #     result = request.GET.get('send_data')
     #     bookmovieid = ListItem.objects.filter(chapter=result)
@@ -89,6 +89,6 @@ def currentlist(request):
             newelem.save()
             return redirect('current')
         except ValueError:
-            return render(request, 'bookmovielistapp/currentlist.html', {'form1': BookMovieListForm(prefix='lists'), 'form2': ListItemForm(prefix='elems'), 'lists': create_lists, 'elems': create_elem, 'chapters': chapters, 'error':'Не правильные данные'})
+            return render(request, 'bookmovielistapp/currentlist.html', {'form1': BookMovieListForm(prefix='lists'), 'form2': ListItemForm(prefix='elems'), 'lists': create_lists, 'elems': create_elem, 'error':'Не правильные данные'})
     # GET-запрос с передачей списков и элементов пользователя
-    return render(request, 'bookmovielistapp/currentlist.html', {'form1': BookMovieListForm(prefix='lists'), 'form2': ListItemForm(prefix='elems'), 'lists': create_lists, 'elems': create_elem, 'chapters': chapters})
+    return render(request, 'bookmovielistapp/currentlist.html', {'form1': BookMovieListForm(prefix='lists'), 'form2': ListItemForm(prefix='elems'), 'lists': create_lists, 'elems': create_elem, })

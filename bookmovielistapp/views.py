@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.core import serializers
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from .forms import SignUpForm, LoginForm, BookMovieListForm, ListItemForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
@@ -68,6 +68,7 @@ def currentlist(request):
     create_lists = BookMovieList.objects.filter(user=request.user)
     create_elem = ListItem.objects.filter(user=request.user)
     chapters = Chapter.objects.select_related().all()
+    # Полчение AJAX-запроса и отправка ответа
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         result = request.GET.get('send_data')
         bookmovieid = BookMovieList.objects.filter(chapter=result, user=request.user)
@@ -76,6 +77,7 @@ def currentlist(request):
     if request.method == 'POST' and 'create_list' in request.POST:
         form = BookMovieListForm(request.POST, prefix='lists')
         newlist = form.save(commit=False)
+        # Присвоение раздела зарегистрированному пользователю
         newlist.user = request.user
         newlist.save()
         return redirect('current')
@@ -84,6 +86,7 @@ def currentlist(request):
         try:
             form = ListItemForm(request.user, request.POST, prefix='elems')
             newelem = form.save(commit=False)
+            # Присвоение элемента зарегистрированному пользователю
             newelem.user = request.user
             newelem.save()
             return redirect('current')
@@ -91,3 +94,15 @@ def currentlist(request):
             return render(request, 'bookmovielistapp/currentlist.html', {'form1': BookMovieListForm(prefix='lists'), 'form2': ListItemForm(request.user, prefix='elems'), 'lists': create_lists, 'chapters': chapters, 'elems': create_elem, 'error':'Не правильные данные'})
     # GET-запрос с передачей списков и элементов пользователя
     return render(request, 'bookmovielistapp/currentlist.html', {'form1': BookMovieListForm(prefix='lists'), 'form2': ListItemForm(request.user, prefix='elems'), 'lists': create_lists, 'chapters': chapters, 'elems': create_elem})
+
+def elemdelete(request, elem_pk):
+    elem = get_object_or_404(ListItem, pk=elem_pk, user=request.user)
+    if request.method == 'POST':
+        elem.delete()
+        return redirect('current')
+
+def listdelete(request, list_pk):
+    listelems = get_object_or_404(BookMovieList, pk=list_pk, user=request.user)
+    if request.method == 'POST':
+        listelems.delete()
+        return redirect('current')

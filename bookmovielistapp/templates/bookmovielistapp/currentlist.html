@@ -9,41 +9,77 @@
 {{ chapter.name }}
 
 
-    {% for list in lists %}
+{% for list in lists %}
+    {% if list.name and list.chapter == chapter %}
         <table>
-                {% if list.name and list.chapter == chapter %}
-                <caption>
-                    {{ list.name }}
-                </caption>
-                <thead>
-                    <th>Название</th>
-                    <th>Автор/Режиссёр</th>
-                </thead>
-                {% endif %}
-                <tbody>
-                    {% for elem in elems %}
-                    <tr>
-                        {% if elem.bookmovieid == list and elem.chapter == chapter %}
-                        <td>
-                            {% if elem.name %}
-                                    {{ elem.name }}
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if elem.author %}
-                                    {{ elem.author }}
-                            {% endif %}
-                        </td>
+            <caption>
+                {{ list.name }}
+                <form action="{% url 'listdelete' list.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+            </caption>
+            <thead>
+                <th>Название</th>
+                <th>Автор/Режиссёр</th>
+                <th>Описание</th>
+                <th>Год выпуска</th>
+                <th>Дата прочтения/просмотра</th>
+            </thead>
+            <tbody>
+                {% for elem in elems %}
+                    {% if elem.bookmovieid == list and elem.chapter == chapter %}
+                        {% if elem.likes %}
+                        <tr  style="background-color: green; color: white;">
+                        {% else %}
+                        <tr>
                         {% endif %}
-                    </tr>
-
-                    {% endfor %}
-                </tbody>
-
-
+                            <td>
+                                {% if elem.name %}
+                                        {{ elem.name }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if elem.author %}
+                                        {{ elem.author }}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if elem.description %}
+                                        {{ elem.description}}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if elem.year_of_issue %}
+                                        {{ elem.year_of_issue|date:"Y" }}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if elem.day_complete %}
+                                        {{ elem.day_complete }}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                            <td>
+                                <form action="{% url 'elemdelete' elem.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
         </table>
- 
-    {% endfor %}
+    {% endif %}
+{% endfor %}
 
 
 {% endfor %}

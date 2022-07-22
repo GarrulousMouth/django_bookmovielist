@@ -29,5 +29,9 @@ urlpatterns = [
     path('logout', views.logoutuser, name='logoutuser'),
     # Страница личного списка
     path('current', views.currentlist, name='current'),
+    # Удаление элемента
+    path('current/<int:elem_pk>/elemdelete', views.elemdelete, name='elemdelete'),
+    # Удаление списка
+    path('current/<int:list_pk>/listdelete', views.listdelete, name='listdelete'),
 
 ]

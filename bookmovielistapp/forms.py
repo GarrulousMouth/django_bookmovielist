@@ -1,6 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from .models import BookMovieList, ListItem
 
@@ -28,6 +27,11 @@ class BookMovieListForm(forms.ModelForm):
     class Meta:
         model = BookMovieList
         fields = ('name', 'chapter')
+        labels = {
+            'name': 'Название',  
+            'chapter': 'Раздел', 
+        }
+
     
 
 class ListItemForm(forms.ModelForm):
@@ -36,6 +40,14 @@ class ListItemForm(forms.ModelForm):
     class Meta:
         model = ListItem
         fields = ('name', 'author', 'description', 'year_of_issue', 'day_complete', 'likes', 'chapter', 'bookmovieid')
+        labels = {
+            'name': 'Название', 
+            'author': 'Автор/Режиссёр', 
+            'description': 'Описание', 
+            'likes': 'Выделить', 
+            'chapter': 'Раздел', 
+            'bookmovieid': 'Подраздел',
+        }
 
     def __init__(self, user, *args, **kwargs):
         super(ListItemForm, self).__init__(*args, **kwargs)

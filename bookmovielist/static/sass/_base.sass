@@ -1,0 +1,64 @@
+@font-face 
+    font-family: 'Merriweather-Bold'
+    src: url('/static/fonts/Merriweather-Bold.ttf')
+
+@font-face 
+    font-family: 'Ubuntu-Bold'
+    src: url('/static/fonts/Ubuntu-Bold.ttf')
+
+@font-face 
+    font-family: 'Ubuntu-Regular'
+    src: url('/static/fonts/Ubuntu-Regular.ttf')
+
+
+*, ::after, ::before
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+
+html
+    font-size: 62.5%
+
+body
+    font-size: 1.8rem
+
+.container
+    display: grid
+    grid-template-rows: 6rem min-content
+    row-gap: 3rem
+    grid-template-columns: [leftpadding-start] minmax(4rem, 1fr) [leftpadding-end column-start] repeat(12, [col-start] minmax(min-content, 1fr) [col-end]) [column-end rightpadding-start] minmax(4rem, 1fr) [rightpadding-end]
+
+.header
+    grid-column: leftpadding-start / rightpadding-end
+    border-bottom: 2px solid black
+    display: grid
+    grid-template-columns: minmax(4rem, 1fr) repeat(12, minmax(min-content, 1fr)) minmax(4rem, 1fr)
+
+.nav
+    display: flex
+    align-items: center
+    justify-content: flex-end
+    grid-column: 10 / -2
+    border-left: 2px solid black
+
+.logo
+    height: 100%
+    right: 5rem
+    grid-column: 2 / 5
+    border-right: 2px solid black
+
+.nav-links
+    display: flex
+    justify-content: flex-end
+    list-style-type: none
+    &__item
+        font-family: 'Ubuntu-Bold', sans-serif
+        &:not(:last-child)
+            margin-right: 2rem
+        &_welcome
+            font-family: 'Ubuntu-Regular', sans-serif
+    &__link
+        &:link, &:visited
+            color: #000000
+            text-decoration: none
+            text-transform: uppercase

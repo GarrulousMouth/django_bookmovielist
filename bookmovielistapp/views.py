@@ -25,16 +25,16 @@ def signup(request):
                 login(request, user)
                 return redirect('current')
             else:
-                return render(request, 'bookmovielistapp/signup.html', {'form': SignUpForm(), 'error': 'Пользователь с таким адресом уже существует'})
+                return render(request, 'registration/signup.html', {'form': SignUpForm(), 'error': 'Пользователь с таким адресом уже существует'})
         else:
             # Обработка ошибки несоответствия паролей
             if request.POST['password1'] != request.POST['password2']:
-                return render(request, 'bookmovielistapp/signup.html', {'form': SignUpForm(), 'error': 'Пароли не совпадают'})
+                return render(request, 'registration/signup.html', {'form': SignUpForm(), 'error': 'Пароли не совпадают'})
             # Проверка на зарегистрированного пользователя
             elif User.objects.filter(username=request.POST.get('username')).exists():
-                return render(request, 'bookmovielistapp/signup.html', {'form': SignUpForm(), 'error': 'Пользователь с таким именем уже существует'})
+                return render(request, 'registration/signup.html', {'form': SignUpForm(), 'error': 'Пользователь с таким именем уже существует'})
     # Переход GET-запроса
-    return render(request, 'bookmovielistapp/signup.html', {'form': SignUpForm()})
+    return render(request, 'registration/signup.html', {'form': SignUpForm()})
 
 # Выход из учётной записи
 def logoutuser(request):
@@ -54,14 +54,14 @@ def loginuser(request):
             if user is not None:
                 login(request, user)
                 return redirect('current')
-        else:
-            # Обработка несуществующего пользователя
-            if not User.objects.filter(username=request.POST.get('username')).exists():
-                return render(request, 'bookmovielistapp/login.html', {'form':LoginForm(), 'error': 'Такого пользователя не существует'})
-            # Обработка неверного пароля
             else:
-                return render(request, 'bookmovielistapp/login.html', {'form':LoginForm(), 'error': 'Неверный пароль'})
-    return render(request, 'bookmovielistapp/login.html', {'form':LoginForm()})
+                # Обработка несуществующего пользователя
+                if not User.objects.filter(username=request.POST.get('username')).exists():
+                    return render(request, 'registration/login.html', {'form':LoginForm(), 'error': 'Такого пользователя не существует'})
+                # Обработка неверного пароля
+                else:
+                    return render(request, 'registration/login.html', {'form':LoginForm(), 'error': 'Неверный пароль'})
+    return render(request, 'registration/login.html', {'form':LoginForm()})
 
 def currentlist(request):
     # Фильтрация элементов таблицы, принадлежащих пользователю
@@ -106,3 +106,4 @@ def listdelete(request, list_pk):
     if request.method == 'POST':
         listelems.delete()
         return redirect('current')
+

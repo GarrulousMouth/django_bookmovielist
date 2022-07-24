@@ -1,5 +1,39 @@
 {% extends 'bookmovielistapp/base.html' %}
-
+{% load static %}
 {% block content %}
-
+<main class="main-home">
+    <div class="left-wrapper">
+            <h2 class="title">
+                Добро<br>
+                пожал<span class="text-white">овать!</span>
+            </h2>
+        <div class="left-wrapper__box-photo">
+            <img class="left-wrapper__photo" src="{% static 'img/home-photo.jpg' %}" alt="">
+        </div>
+        <div class="composition">
+            <div class="box-color">
+                <div class="box-color__color-1"></div>
+                <div class="box-color__color-2"></div>
+            </div>
+            <div class="box-photo">
+                <div class="box-photo__photo"></div>
+            </div>
+        </div>
+    </div>
+    <div class="right-wrapper">
+        <div class="right-photo">
+            <div class="box-photo right-photo__box-photo">
+                <div class="box-photo__photo box-photo__photo_1"></div>
+            </div>
+            <div class="box-photo right-photo__box-photo">
+                <div class="box-photo__photo box-photo__photo_2"></div>
+            </div>
+        </div>
+        <h1 class="home-text">Здесь ты сможешь вести список прочитанных книг и просмотренных фильмов в удобной форме, указывая основные данные. Это поможет тебе не только структурировать информацию, но и анализировать её при необходимости.</h1>
+        <div class="btn-box">
+            <a class="btn-box__btn btn" href="{% url 'loginuser' %}">Войти</a>
+            <a class="btn-box__link btn-text" href="{% url 'signup' %}">Зарегистрироваться</a>
+        </div>
+    </div>
+</main>
 {% endblock %}

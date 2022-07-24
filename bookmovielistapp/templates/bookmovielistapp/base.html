@@ -9,23 +9,31 @@
     <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
 </head>
 <body>
-    {% if user.is_authenticated %}
-        Logged in as {{ user.username }}
-
-        <form action="{% url 'logoutuser' %}" method="POST">
-            {% csrf_token %}
-            <button type="submit">Logout</button>
-        </form>
-        
-
-    {% else %}
-        <a href="{% url 'signup' %}">Sign Up</a>
-        <a href="{% url 'loginuser' %}">Login</a>
-
-    {% endif %}
-
-
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+            </div>
+            <nav class="nav">
+                {% if user.is_authenticated %}
+                    <ul class="nav-links">
+                        <li class="nav-links__item nav-links__item_welcome">Добро пожаловать, {{ user.username }}!</li>
+                        <li class="nav-links__item">
+                            <form action="{% url 'logoutuser' %}" method="POST">
+                                {% csrf_token %}
+                                <button class="form-btn" type="submit">Выйти</button>
+                            </form>
+                        </li>
+                    </ul>
+                {% else %}
+                    <ul class="nav-links">
+                        <li class="nav-links__item"><a class="nav-links__link" href="{% url 'loginuser' %}">Войти</a></li>
+                        <li class="nav-links__item"><a class="nav-links__link" href="{% url 'signup' %}">Зарегистрироваться</a></li>
+                    </ul>
+                {% endif %}
+            </nav>
+    </header>
     {% block content %}{% endblock %}
+    </div>
     <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
 </body>

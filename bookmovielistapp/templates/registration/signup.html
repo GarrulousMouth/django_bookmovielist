@@ -1,19 +1,68 @@
 {% extends 'bookmovielistapp/base.html' %}
 
 {% block content %}
-    <h1>Регистрация</h1>
-    {% if not user.is_authenticated %}
-
-
-        {% if not form.is_valid %}
-            {{ error }}
-            <form method="POST">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Зарегистрироваться</button>
-            </form>
+<main class="main-signup">
+    <div class="signup__left-wrapper">
+        <div class="regbox-photo">
+            <div class="regbox-photo__photo"></div>
+        </div>
+    </div>
+    <div class="signup__right-wrapper">
+        <h2 class="registatrion-title title"><span class="text-white">Реги</span>страция</h2>
+        <div class="signup-color">
+            <div class="signup-color__1"></div>
+            <div class="signup-color__2"></div>
+        </div>
+        {% if not user.is_authenticated %}
+    
+            {% if not form.is_valid %}
+    
+                <form class="registration-form" method="POST">
+                    {% csrf_token %}
+                    <div class="box-input">
+                        {{ form.username.errors }}
+                        <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                        {{ form.username }}
+                    </div>
+                    <div class="box-input">
+                        {{ form.email.errors }}
+                        <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                        {{ form.email }}
+                        <span class="helptext">{{ form.email.help_text }}</span>
+                    </div>
+                    <div class="box-input passwords">
+                        <div class="passwords_1">
+                            {{ form.password1.errors }}
+                            <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
+                            {{ form.password1 }}
+                        </div>
+                        <div class="passwords_2">
+                            {{ form.password2.errors }}
+                            <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+                            {{ form.password2 }}
+                        </div>
+                    </div>
+                    <button class="form-btn" type="submit">Зарегистрироваться</button>
+                </form>
+                <div class="box-error">
+                    <p class="registation-error">{{ error }}</p>
+                </div>
+                <div class="signup-composition">
+                    <div class="signup-composition__box">
+                        <div class="signup-composition__photo signup-composition__photo_1"></div>
+                    </div>
+                    <div class="signup-composition__box">
+                        <div class="signup-composition__photo signup-composition__photo_2"></div>
+                    </div>
+                    <div class="signup-composition__box">
+                        <div class="signup-composition__photo signup-composition__photo_3"></div>
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <h2>Уходи, ты уже зарегистрирован</h2>
         {% endif %}
-    {% else %}
-        <h2>Уходи, ты уже зарегистрирован</h2>
-    {% endif %}
+    </div>
+  
+</main>
 {% endblock %}

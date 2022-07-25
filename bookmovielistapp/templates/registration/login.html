@@ -1,13 +1,15 @@
 {% extends 'bookmovielistapp/base.html' %}
 {% block content %}
-<h1>Войти</h1>
+<main class="main-login">
+    <h1 class="title">ВХОД</h1>
 
-<h2>{{ error }}</h2>
+    <h2>{{ error }}</h2>
 
-<form method="POST">
-        {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Войти</button>
-</form>
+    <form class="form-login" method="POST">
+            {% csrf_token %}
+        {{ form.as_p }}
+        <button class="form-btn" type="submit">Войти</button>
+    </form>
+</main>
 
 {% endblock %}

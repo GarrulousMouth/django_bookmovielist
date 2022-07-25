@@ -24,7 +24,7 @@ body
 
 .container
     display: grid
-    grid-template-rows: 6rem min-content
+    grid-template-rows: minmax(6rem, 7rem) min-content
     row-gap: 3rem
     grid-template-columns: [leftpadding-start] minmax(4rem, 1fr) [leftpadding-end column-start] repeat(12, [col-start] minmax(min-content, 1fr) [col-end]) [column-end rightpadding-start] minmax(4rem, 1fr) [rightpadding-end]
 
@@ -49,10 +49,12 @@ body
 
 .nav-links
     display: flex
-    justify-content: flex-end
+    padding-left: 2rem
+    justify-content: space-between
     list-style-type: none
     &__item
         font-family: 'Ubuntu-Bold', sans-serif
+        text-align: center
         &:not(:last-child)
             margin-right: 2rem
         &_welcome
@@ -62,3 +64,15 @@ body
             color: #000000
             text-decoration: none
             text-transform: uppercase
+
+label
+    font-family: 'Ubuntu-Bold'
+    font-size: 1.4rem
+    line-height: 2.2rem
+    text-transform: uppercase
+    display: block
+
+.helptext
+    display: block
+    font-style: italic
+

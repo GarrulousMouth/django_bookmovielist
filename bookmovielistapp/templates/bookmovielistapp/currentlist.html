@@ -3,26 +3,29 @@
 {% block content %}
 <main class="main-current">
     {% if user.is_authenticated %}
+    <div class="box-btn">
+        <input id="create-chapter" value="Создать подраздел" type="submit" class="form-btn form-btn_chapter box-btn__create-chapter">
+        <input id="create-element" value="Создать элемент" type="submit" class="form-btn form-btn_elem box-btn__create-elem">
+    </div>
     {{ error }}
     {% for chapter in chapters %}
-    <h2 class="title-chapter">{{ chapter.name }}</h2>
-    
+    <h2 class="title-chapter chapter">{{ chapter.name }}</h2>
     {% for list in lists %}
         {% if list.name and list.chapter == chapter %}
             <table class="table-current">
                 <caption class="caption">
-                    <h3 class="caption__title">{{ list.name }}</h3>
+                    <h3 class="caption__title title-caption">{{ list.name }}</h3>
                     <form class="caption__delete-chapter" action="{% url 'listdelete' list.id %}" method="post">
                         {% csrf_token %}
-                        <button class="caption__btn-chapter" type="submit">&times;</button>
+                        <button class="btn-delete" type="submit">&times;</button>
                     </form>
                 </caption>
                 <thead>
-                    <th>Название</th>
-                    <th>Автор/Режиссёр</th>
-                    <th>Описание</th>
-                    <th>Год выпуска</th>
-                    <th>Дата прочтения/просмотра</th>
+                    <th class="title-column">Название</th>
+                    <th class="title-column">Автор/Режиссёр</th>
+                    <th class="title-column">Описание</th>
+                    <th class="title-column">Год выпуска</th>
+                    <th class="title-column">Дата прочтения/просмотра</th>
                 </thead>
                 <tbody>
                     {% for elem in elems %}
@@ -68,7 +71,7 @@
                                 <td>
                                     <form action="{% url 'elemdelete' elem.id %}" method="post">
                                         {% csrf_token %}
-                                        <button type="submit">Delete</button>
+                                        <button class="btn-delete btn-delete_elem" type="submit">&times;</button>
                                     </form>
                                 </td>
                             </tr>
@@ -81,18 +84,23 @@
     
     
     {% endfor %}
+    <div class="formbox" id="formboxchapter">
+        <a id="formboxchapter-close" class="formbox__close btn-delete btn-delete_link" href="#">&times;</a>
+        <form method="POST" class="form-chapter">
+                {% csrf_token %}
+                {{ form1.as_p }}
+            <button class="form-btn" name="create_list" type="submit">Создать подраздел</button>
+        </form>
+    </div>
     
-    <form method="POST">
-        {% csrf_token %}
-        {{ form1.as_p }}
-    <button name="create_list" type="submit">Создать подраздел</button>
-    </form>
-    
-    <form method="POST" id="create_elems">
-        {% csrf_token %}
-        {{ form2.as_p }}
-    <button name="create_elem" type="submit">Создать элемент</button>
-    </form>
+    <div class="formbox" id="formboxelem">
+        <a id="formboxelem-close" class="formbox__close btn-delete btn-delete_link" href="#">&times;</a>
+        <form method="POST" id="create_elems" class="form-elem">
+                {% csrf_token %}
+                {{ form2.as_p }}
+            <button class="form-btn" name="create_elem" type="submit">Создать элемент</button>
+        </form>
+    </div>
     {% endif %}
     
 </main>

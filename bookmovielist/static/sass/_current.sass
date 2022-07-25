@@ -1,16 +1,49 @@
 .main-current
     grid-column: column-start / column-end
-    display: grid
-
-.title-chapter
-    text-align: center
-    margin-bottom: 1rem
+    position: relative
 
 .table-current
+    width: 100%
     padding: 0 5rem
 
 .caption
+    background-color: #ceb1a6
     &__title
         display: inline-block
     &__delete-chapter
         display: inline-block
+
+tr
+    font-family: 'Ubuntu-Regular', sans-serif
+
+
+.chapter
+    background-color: #bcd6b9
+
+.box-btn
+    height: 5rem
+    display: flex
+    align-items: flex-start
+    justify-content: right
+    &__create-elem
+        display: inline
+    &__create-chapter
+        display: inline
+        margin-right: 2rem
+
+.formbox
+    display: none
+    position: fixed
+    border: 2px #1D2624 solid
+    border-radius: 10%
+    top: 50%
+    left: 50%
+    background-color: #bebebe
+    padding: 3% 3%
+    transform: translate(-50%, -50%)
+    opacity: 0
+    &__close
+        position: absolute
+        top: 2rem
+        right: 2rem
+

@@ -48,3 +48,32 @@ $('#id_elems-chapter').change(function () {
         }
     })
 })
+
+
+$( document ).ready(function() {
+    $('#create-chapter').click(function(event) {
+        event.preventDefault();
+        $('#formboxchapter').css('display', 'block').animate({ opacity: 1 }, 198)
+    })
+
+    $('#formboxchapter-close').click(function(event) {
+        event.preventDefault();
+        $('#formboxchapter').animate({ opacity: 0 }, 198, function() {
+            $(this).css('display', 'none');
+        })
+    })
+});
+
+$( document ).ready(function() {
+    $('#create-element').click(function(event) {
+        event.preventDefault();
+        $('#formboxelem').css('display', 'block').animate({ opacity: 1 }, 198)
+    })
+
+    $('#formboxelem-close').click(function(event) {
+        event.preventDefault();
+        $('#formboxelem').animate({ opacity: 0 }, 198, function() {
+            $(this).css('display', 'none');
+        })
+    })
+});

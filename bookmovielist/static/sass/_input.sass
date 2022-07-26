@@ -3,10 +3,13 @@
     border: none
     padding-left: 1rem
     font-size: 1.8rem
+    @include respond(min-tablet)
+        font-size: 3rem
 
 .input-form
     width: 70%
-
+    @include respond(min-tablet)
+        width: 100%
 
 .input-login
     &::placeholder

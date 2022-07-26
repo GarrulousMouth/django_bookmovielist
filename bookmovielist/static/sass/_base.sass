@@ -45,13 +45,11 @@ body
     grid-template-rows: minmax(6rem, 7rem) min-content
     row-gap: 3rem
     grid-template-columns: [leftpadding-start] minmax(4rem, 1fr) [leftpadding-end column-start] repeat(12, [col-start] minmax(min-content, 1fr) [col-end]) [column-end rightpadding-start] minmax(4rem, 1fr) [rightpadding-end]
-
 .header
     grid-column: leftpadding-start / rightpadding-end
     border-bottom: 2px solid black
     display: grid
     grid-template-columns: minmax(4rem, 1fr) repeat(3, minmax(min-content, 1fr)) 1fr repeat(10, minmax(min-content, 1fr)) minmax(4rem, 1fr)
-
 .nav
     display: flex
     align-items: center

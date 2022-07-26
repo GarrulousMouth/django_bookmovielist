@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm, SetPasswordForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from .models import BookMovieList, ListItem
 
@@ -22,6 +22,46 @@ class LoginForm(forms.Form):
     class Meta:
         model = AuthenticationForm
         fields = ('username', 'password',)
+
+class UserPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super(UserPasswordChangeForm, self).__init__(*args, **kwargs)
+    old_password = forms.CharField(label='Старый пароль', widget=forms.PasswordInput(attrs={
+        'class': 'input-style input-pass input-registration',
+        'placeholder': '\ue98f',
+        }))
+    new_password1 = forms.CharField(label='Новый пароль', widget=forms.PasswordInput(attrs={
+        'class': 'input-style input-pass input-registration',
+        'placeholder': '\ue98f',
+        }))
+    new_password2 = forms.CharField(label='Повторите пароль', widget=forms.PasswordInput(attrs={
+        'class': 'input-style input-pass mb-20px input-registration',
+        'placeholder': '\ue98f',
+        }))
+
+class UserSetPasswormForm(SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super(UserSetPasswormForm, self).__init__(*args, **kwargs)
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'input-style input-pass input-registration',
+        'placeholder': '\ue98f',
+        }))
+    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'input-style input-pass mb-20px input-registration',
+        'placeholder': '\ue98f',
+        }))
+
+
+class UserPasswordResetForm(PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        super(UserPasswordResetForm, self).__init__(*args, **kwargs)
+
+    email = forms.EmailField(label='', widget=forms.EmailInput(attrs={
+        'class': 'input-style input-email input-registration',
+        'placeholder': '\ue945',
+        'type': 'email',
+        'name': 'email'
+        }))
 
 
 class BookMovieListForm(forms.ModelForm):
@@ -54,12 +94,12 @@ class ListItemForm(forms.ModelForm):
             'bookmovieid': 'Подраздел',
         }
         widgets = {
-            'name': forms.TextInput(attrs={'class':'mb-10px input-style input-form'}),
-            'author': forms.TextInput(attrs={'class':'mb-10px input-style input-form'}),
-            'description': forms.Textarea(attrs={'class':'mb-10px input-style textarea input-form'}),
-            'likes': forms.CheckboxInput(attrs={'class':'mb-10px input-style'}),
-            'chapter': forms.Select(attrs={'class':'mb-10px input-style'}),
-            'bookmovieid': forms.Select(attrs={'class': 'mb-10px input-style'})
+            'name': forms.TextInput(attrs={'class':'input-style input-form'}),
+            'author': forms.TextInput(attrs={'class':'input-style input-form'}),
+            'description': forms.Textarea(attrs={'class':'input-style textarea input-form'}),
+            'likes': forms.CheckboxInput(attrs={'class':'input-style'}),
+            'chapter': forms.Select(attrs={'class':'input-style'}),
+            'bookmovieid': forms.Select(attrs={'class': 'input-style'})
         }
 
     def __init__(self, user, *args, **kwargs):

@@ -12,6 +12,9 @@
     grid-template-columns: repeat(3, 8rem) repeat(6, 1fr)
     grid-template-rows: repeat(9, 1fr)
     justify-content: center
+    @include respond(min-tablet)
+        grid-column: 1 / -1
+        height: 20vh
     &__box-photo
         padding-left: 5rem
         grid-column: 4 / -1
@@ -19,16 +22,21 @@
         height: 100vh
         width: 100%
         overflow: hidden
+        @include respond(min-tablet)
+            display: none
     &__photo
         height: 100%
         width: 100%
         object-fit: cover
+
     
 
 .right-wrapper
     grid-column: 9 / -1
     display: flex
     flex-direction: column
+    @include respond(min-tablet)
+        grid-column: 1 / -1
 
 .home-title
     grid-column: 1 / 7
@@ -42,6 +50,8 @@
     display: flex
     flex-direction: column
     justify-content: flex-end
+    @include respond(min-tablet)
+        display: none
 
 .box-photo
     width: 16rem
@@ -83,10 +93,6 @@
     background-position: -8rem -15rem
 
 .home-text
-    text-decoration: none
-    font-family: 'Ubuntu-Regular', serif
-    font-size: 1.8rem
-    font-weight: normal
     margin-bottom: 1.6rem
 
 .btn-box

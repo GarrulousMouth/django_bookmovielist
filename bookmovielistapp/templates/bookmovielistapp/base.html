@@ -17,7 +17,7 @@
             <nav class="nav">
                 {% if user.is_authenticated %}
                     <ul class="nav-links">
-                        <li class="nav-links__item nav-links__item_welcome">Добро пожаловать, {{ user.username }}!</li>
+                        <li class="nav-links__item nav-links__item_welcome">Добро пожаловать, <a href="{% url 'password_change' %}">{{ user.username }}</a>!</li>
                         <li class="nav-links__item">
                             <form action="{% url 'logoutuser' %}" method="POST">
                                 {% csrf_token %}

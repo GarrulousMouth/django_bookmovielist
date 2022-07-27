@@ -54,6 +54,9 @@ $( document ).ready(function() {
     $('#create-chapter').click(function(event) {
         event.preventDefault();
         $('#formboxchapter').css('display', 'block').animate({ opacity: 1 }, 198)
+        $('#formboxelem').animate({ opacity: 0 }, 198, function() {
+            $(this).css('display', 'none');
+        })
     })
 
     $('#formboxchapter-close').click(function(event) {
@@ -68,6 +71,9 @@ $( document ).ready(function() {
     $('#create-element').click(function(event) {
         event.preventDefault();
         $('#formboxelem').css('display', 'block').animate({ opacity: 1 }, 198)
+        $('#formboxchapter').animate({ opacity: 0 }, 198, function() {
+            $(this).css('display', 'none').animate({ opacity: 1 }, 198);
+        })
     })
 
     $('#formboxelem-close').click(function(event) {

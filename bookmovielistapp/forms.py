@@ -86,12 +86,12 @@ class ListItemForm(forms.ModelForm):
         model = ListItem
         fields = ('name', 'author', 'description', 'year_of_issue', 'day_complete', 'likes', 'chapter', 'bookmovieid')
         labels = {
-            'name': 'Название', 
+            'name': 'Название*', 
             'author': 'Автор/Режиссёр', 
             'description': 'Описание', 
             'likes': 'Выделить', 
-            'chapter': 'Раздел', 
-            'bookmovieid': 'Подраздел',
+            'chapter': 'Раздел*', 
+            'bookmovieid': 'Подраздел*',
         }
         widgets = {
             'name': forms.TextInput(attrs={'class':'input-style input-form'}),
